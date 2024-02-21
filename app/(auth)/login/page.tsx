@@ -2,14 +2,47 @@
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import axios from "axios";
+import { signIn } from "next-auth/react";
 
 function Login() {
+  const params = useSearchParams();
+  const router = useRouter();
+
   const [auth, setAuth] = useState({
     email: "",
     password: "",
   });
+
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const [error, setError] = useState<loginErrorType>({});
+
   const submit = () => {
-    console.log(auth);
+    setLoading(true);
+    axios
+      .post("/api/auth/login", auth)
+      .then((res) => {
+        setLoading(false);
+
+        const response = res.data;
+
+        if (response.status == 200) {
+          signIn("credentials", {
+            email: auth.email,
+            password: auth.password,
+            callbackUrl: "/", // redirect to home page
+            redirect: true,
+          });
+        } else if (response?.status == 400) {
+          setError(response?.errors);
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+      });
   };
   return (
     <section>
@@ -31,6 +64,13 @@ function Login() {
               Signup
             </a>
           </p>
+          {params.get("message") ? (
+            <p className="text-green-400 mt-3 text-md flex justify-center items-center">
+              {params.get("message")}
+            </p>
+          ) : (
+            <></>
+          )}
           <form action="#" method="POST" className="mt-8">
             <div className="space-y-5">
               <div>
@@ -50,6 +90,9 @@ function Login() {
                       setAuth({ ...auth, email: e.target.value })
                     }
                   ></input>
+                  <span className="text-pink-500 text-xs font-italic">
+                    {error?.email}
+                  </span>
                 </div>
               </div>
               <div>
@@ -79,15 +122,21 @@ function Login() {
                       setAuth({ ...auth, password: e.target.value })
                     }
                   ></input>
+                  <span className="text-pink-500 text-xs font-italic">
+                    {error?.password}
+                  </span>
                 </div>
               </div>
               <div>
                 <button
                   type="button"
-                  className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
+                  className={`inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80 ${
+                    loading ? "bg-gray-500" : "bg-black"
+                  }`}
                   onClick={submit}
                 >
-                  Login <ArrowRight className="ml-2" size={16} />
+                  {loading ? "Processing" : "Login"}{" "}
+                  <ArrowRight className="ml-2" size={16} />
                 </button>
               </div>
             </div>
