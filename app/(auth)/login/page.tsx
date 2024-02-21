@@ -44,6 +44,15 @@ function Login() {
         console.log(err);
       });
   };
+
+  // To Sign in with Github
+  const signInWithGithub = () => {
+    signIn("github", {
+      callbackUrl: "/",
+      redirect: true,
+    });
+  };
+
   return (
     <section>
       <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
@@ -78,8 +87,7 @@ function Login() {
                   htmlFor=""
                   className="text-base font-medium text-gray-900"
                 >
-                  {" "}
-                  Email address{" "}
+                  Email address
                 </label>
                 <div className="mt-2">
                   <input
@@ -101,16 +109,14 @@ function Login() {
                     htmlFor=""
                     className="text-base font-medium text-gray-900"
                   >
-                    {" "}
-                    Password{" "}
+                    Password
                   </label>
                   <a
                     href="#"
                     title=""
                     className="text-sm font-semibold text-black hover:underline"
                   >
-                    {" "}
-                    Forgot password?{" "}
+                    Forgot password?
                   </a>
                 </div>
                 <div className="mt-2">
@@ -142,19 +148,21 @@ function Login() {
             </div>
           </form>
           <div className="mt-3 space-y-3">
+            <p className="text-center text-sm text-gray-600"> --OR-- </p>
             <button
               type="button"
               className="relative inline-flex w-full items-center justify-center rounded-md border border-gray-400 bg-white px-3.5 py-2.5 font-semibold text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:text-black focus:bg-gray-100 focus:text-black focus:outline-none"
             >
               <span className="mr-2 inline-block"></span>
-              Sign in with Google
+              Login in with Google
             </button>
             <button
               type="button"
               className="relative inline-flex w-full items-center justify-center rounded-md border border-gray-400 bg-white px-3.5 py-2.5 font-semibold text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:text-black focus:bg-gray-100 focus:text-black focus:outline-none"
+              onClick={signInWithGithub}
             >
               <span className="mr-2 inline-block"></span>
-              Sign in with Github
+              Login in with Github
             </button>
           </div>
         </div>

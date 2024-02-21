@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 export default function Signup() {
   const router = useRouter();
@@ -39,6 +40,15 @@ export default function Signup() {
         console.log(err);
       });
   };
+
+  // To Sign in with Github
+  const signInWithGithub = () => {
+    signIn("github", {
+      callbackUrl: "/",
+      redirect: true,
+    });
+  };
+
   return (
     <section>
       <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-4">
@@ -109,8 +119,7 @@ export default function Signup() {
                     htmlFor="password"
                     className="text-base font-medium text-gray-900"
                   >
-                    {" "}
-                    Password{" "}
+                    Password
                   </label>
                 </div>
                 <div className="mt-2">
@@ -134,8 +143,7 @@ export default function Signup() {
                     htmlFor="password"
                     className="text-base font-medium text-gray-900"
                   >
-                    {" "}
-                    Confirm Password{" "}
+                    + Confirm Password
                   </label>
                 </div>
                 <div className="mt-2">
@@ -171,19 +179,21 @@ export default function Signup() {
             </div>
           </form>
           <div className="mt-3 space-y-3">
+            <p className="text-center text-sm text-gray-600"> --OR-- </p>
             <button
               type="button"
               className="relative inline-flex w-full items-center justify-center rounded-md border border-gray-400 bg-white px-3.5 py-2.5 font-semibold text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:text-black focus:bg-gray-100 focus:text-black focus:outline-none"
             >
               <span className="mr-2 inline-block"></span>
-              Sign up with Google
+              Continue with Google
             </button>
             <button
               type="button"
               className="relative inline-flex w-full items-center justify-center rounded-md border border-gray-400 bg-white px-3.5 py-2.5 font-semibold text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:text-black focus:bg-gray-100 focus:text-black focus:outline-none"
+              onClick={signInWithGithub}
             >
               <span className="mr-2 inline-block"></span>
-              Sign up with Github
+              Continue with Github
             </button>
           </div>
         </div>
