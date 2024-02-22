@@ -16,12 +16,14 @@ export const authOptions: AuthOptions = {
 
         const existingUser = await User.findOne({ email: user.email });
         if (existingUser) {
+          existingUser.role = existingUser?.role == null ? "User" : "Admin";
           return true;
         }
 
         await User.create({
           name: user.name,
           email: user.email,
+          role: "User",
         });
 
         return true;
