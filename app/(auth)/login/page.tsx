@@ -72,7 +72,7 @@ function Login() {
             Sign in to your account
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600 ">
-            Don&apos;t have an account?{" "}
+            Don&apos;t have an account?
             <a
               href="/register"
               title=""
@@ -120,7 +120,7 @@ function Login() {
                     Password
                   </label>
                   <a
-                    href="#"
+                    href="/forgetpassword"
                     title=""
                     className="text-sm font-semibold text-black hover:underline"
                   >

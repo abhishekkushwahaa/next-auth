@@ -5,6 +5,8 @@ class Env {
   static SMTP_PASSWORD: string = process.env.SMTP_PASSWORD!;
   static SMTP_SECURE: string = process.env.SMTP_SECURE!;
   static SMTP_FROM: string = process.env.EMAIL_FROM!;
+  static SECRET_KEY: string = process.env.NEXTAUTH_SECRET!;
+  static APP_URL: string = process.env.NEXTAUTH_URL!;
 }
 
 export default Env;
