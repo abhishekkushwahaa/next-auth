@@ -10,7 +10,7 @@ export const authOptions: AuthOptions = {
     signIn: "/login",
   },
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
+    async signIn({ user, name, account, profile, email, credentials }) {
       try {
         connect();
 
